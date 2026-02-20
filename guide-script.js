@@ -43,13 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.guide-section');
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+        rootMargin: '100px',
+        threshold: 0.01
     };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
             }
@@ -57,9 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
     
     sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        // Only set initial state if section is not already in viewport
+        const rect = section.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (!isInViewport) {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        } else {
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }
         observer.observe(section);
     });
     

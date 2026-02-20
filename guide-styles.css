@@ -520,7 +520,7 @@ html {
     color: white;
 }
 
-/* Animations */
+/* Animations - handled by JavaScript for scroll-based reveal */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -532,8 +532,9 @@ html {
     }
 }
 
+/* Section visibility is controlled by JavaScript IntersectionObserver */
 .guide-section {
-    animation: fadeIn 0.5s ease-out;
+    /* Initial state - will be set by JS */
 }
 
 /* Print Styles */
