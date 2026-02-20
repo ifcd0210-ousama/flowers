@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Animation Guide / Guía de Animación 🌸</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="guide-styles.css">
+    <!-- Prism.js Syntax Highlighting - VS Code Dark Theme -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+</head>
+<body>
+    <div class="guide-page">
+        <!-- Navigation -->
+        <nav class="guide-nav">
+            <a href="index.html" class="nav-link" data-en="🌸 Back to Garden" data-es="🌸 Volver al Jardín">🌸 Back to Garden</a>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <header class="guide-header">
+            <h1 data-en="🌸 Interactive Animated Effects Guide 🌸" data-es="🌸 Guía de Efectos Animados Interactivos 🌸">🌸 Interactive Animated Effects Guide 🌸</h1>
+            <p class="guide-subtitle" data-en="Learn how to create beautiful animations with CSS, SVG, and GSAP" data-es="Aprende a crear hermosas animaciones con CSS, SVG y GSAP">Learn how to create beautiful animations with CSS, SVG, and GSAP</p>
+        </header>
+
+        <!-- Table of Contents -->
+        <aside class="toc">
+            <h2 data-en="📑 Table of Contents" data-es="📑 Tabla de Contenidos">📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#playground" data-en="🎮 Interactive Playground" data-es="🎮 Parque Interactivo">🎮 Interactive Playground</a></li>
+                <li><a href="#requirements" data-en="1. Requirements" data-es="1. Requisitos">1. Requirements</a></li>
+                <li><a href="#core-concepts" data-en="2. Core Concepts" data-es="2. Conceptos Fundamentales">2. Core Concepts</a></li>
+                <li><a href="#tutorial" data-en="3. Step-by-Step Tutorial" data-es="3. Tutorial Paso a Paso">3. Step-by-Step Tutorial</a></li>
+                <li><a href="#examples" data-en="4. Code Examples" data-es="4. Ejemplos de Código">4. Code Examples</a></li>
+                <li><a href="#tips" data-en="5. Tips & Best Practices" data-es="5. Consejos y Mejores Prácticas">5. Tips & Best Practices</a></li>
+            </ul>
+        </aside>
+
+        <!-- Interactive Playground Section -->
+        <section id="playground" class="guide-section playground-section">
+            <h2 data-en="🎮 Interactive Playground" data-es="🎮 Parque Interactivo">🎮 Interactive Playground</h2>
+            <p class="playground-intro" data-en="Try it yourself! Create flowers, drag them around, and see the code in real-time." data-es="¡Pruébalo tú mismo! Crea flores, arrástralas y mira el código en tiempo real.">Try it yourself! Create flowers, drag them around, and see the code in real-time.</p>
+            
+            <div class="playground-container">
+                <!-- Flower Generator Panel -->
+                <div class="generator-panel">
+                    <h3 data-en="🌸 Flower Generator" data-es="🌸 Generador de Flores">🌸 Flower Generator</h3>
+                    
+                    <div class="control-group">
+                        <label data-en="Flower Type:" data-es="Tipo de Flor:">Flower Type:</label>
+                        <div class="flower-type-selector">
+                            <button class="flower-type-btn active" data-type="daisy" title="Daisy">🌼</button>
+                            <button class="flower-type-btn" data-type="tulip" title="Tulip">🌷</button>
+                            <button class="flower-type-btn" data-type="sunflower" title="Sunflower">🌻</button>
+                            <button class="flower-type-btn" data-type="rose" title="Rose">🌹</button>
+                            <button class="flower-type-btn" data-type="cute" title="Cute">🌸</button>
+                            <button class="flower-type-btn" data-type="star" title="Star">⭐</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label data-en="Color:" data-es="Color:">Color:</label>
+                        <div class="color-picker-container">
+                            <input type="color" id="flowerColor" value="#FF69B4" class="color-picker">
+                            <span class="color-value">#FF69B4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label data-en="Size:" data-es="Tamaño:">Size:</label>
+                        <input type="range" id="flowerSize" min="0.5" max="2" step="0.1" value="1" class="size-slider">
+                        <span class="size-value">1x</span>
+                    </div>
+                    
+                    <button class="generate-btn" id="generateFlower" data-en="🌱 Generate Flower" data-es="🌱 Generar Flor">🌱 Generate Flower</button>
+                    <button class="clear-btn" id="clearPlayground" data-en="🗑️ Clear All" data-es="🗑️ Limpiar Todo">🗑️ Clear All</button>
+                </div>
+                
+                <!-- Playground Canvas -->
+                <div class="playground-canvas" id="playgroundCanvas">
+                    <div class="playground-sky"></div>
+                    <div class="playground-grass"></div>
+                    <div class="playground-flowers" id="playgroundFlowers"></div>
+                    <div class="playground-hint" data-en="Click 'Generate Flower' or double-click here" data-es="Haz clic en 'Generar Flor' o doble clic aquí">Click 'Generate Flower' or double-click here</div>
+                </div>
+                
+                <!-- Code Output Panel -->
+                <div class="code-output-panel">
+                    <h3 data-en="📝 Generated Code" data-es="📝 Código Generado">📝 Generated Code</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript" id="generatedCode">// Generate a flower to see the code!</code></pre>
+                    </div>
+                    
+                    <div class="animation-controls">
+                        <h4 data-en="Animation Controls" data-es="Controles de Animación">Animation Controls</h4>
+                        <div class="control-buttons">
+                            <button class="anim-btn" id="triggerWind" data-en="💨 Wind" data-es="💨 Viento">💨 Wind</button>
+                            <button class="anim-btn" id="triggerBounce" data-en="⬆️ Bounce" data-es="⬆️ Rebote">⬆️ Bounce</button>
+                            <button class="anim-btn" id="triggerSparkle" data-en="✨ Sparkle" data-es="✨ Destello">✨ Sparkle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress Tracker -->
+            <div class="progress-tracker">
+                <h3 data-en="📊 Your Progress" data-es="📊 Tu Progreso">📊 Your Progress</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="tutorialProgress"></div>
+                </div>
+                <span class="progress-text" id="progressText">0% Complete</span>
+                
+                <div class="step-checklist">
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="1">
+                        <span data-en="Step 1: HTML Structure" data-es="Paso 1: Estructura HTML">Step 1: HTML Structure</span>
+                    </label>
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="2">
+                        <span data-en="Step 2: CSS Animations" data-es="Paso 2: Animaciones CSS">Step 2: CSS Animations</span>
+                    </label>
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="3">
+                        <span data-en="Step 3: SVG Graphics" data-es="Paso 3: Gráficos SVG">Step 3: SVG Graphics</span>
+                    </label>
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="4">
+                        <span data-en="Step 4: GSAP Animations" data-es="Paso 4: Animaciones GSAP">Step 4: GSAP Animations</span>
+                    </label>
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="5">
+                        <span data-en="Step 5: Drag & Drop" data-es="Paso 5: Arrastrar y Soltar">Step 5: Drag & Drop</span>
+                    </label>
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="6">
+                        <span data-en="Step 6: Particle Effects" data-es="Paso 6: Efectos de Partículas">Step 6: Particle Effects</span>
+                    </label>
+                    <label class="step-checkbox">
+                        <input type="checkbox" data-step="7">
+                        <span data-en="Step 7: Ambient Effects" data-es="Paso 7: Efectos Ambientales">Step 7: Ambient Effects</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="guide-content">
+            <!-- Requirements Section -->
+            <section id="requirements" class="guide-section">
+                <h2 data-en="📋 Requirements" data-es="📋 Requisitos">📋 Requirements</h2>
+                
+                <h3 data-en="Software & Libraries" data-es="Software y Librerías">Software & Libraries</h3>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-en="Requirement" data-es="Requisito">Requirement</th>
+                                <th data-en="Version" data-es="Versión">Version</th>
+                                <th data-en="Purpose" data-es="Propósito">Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-en="Modern Web Browser" data-es="Navegador Web Moderno">Modern Web Browser</td>
+                                <td>Chrome 80+, Firefox 75+, Safari 13+, Edge 80+</td>
+                                <td data-en="CSS3 & ES6+ support" data-es="Soporte CSS3 y ES6+">CSS3 & ES6+ support</td>
+                            </tr>
+                            <tr>
+                                <td>GSAP (GreenSock)</td>
+                                <td>3.12.5+</td>
+                                <td data-en="JavaScript animation library" data-es="Librería de animación JavaScript">JavaScript animation library</td>
+                            </tr>
+                            <tr>
+                                <td data-en="GSAP Draggable Plugin" data-es="Plugin GSAP Draggable">GSAP Draggable Plugin</td>
+                                <td>3.12.5+</td>
+                                <td data-en="Drag-and-drop functionality" data-es="Funcionalidad de arrastrar y soltar">Drag-and-drop functionality</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 data-en="CDN Links" data-es="Enlaces CDN">CDN Links</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                    </div>
+                    <pre><code class="language-html"><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script></code></pre>
+                </div>
+
+                <div class="info-box">
+                    <p data-en="💡 No Build Tools Required - This project uses vanilla HTML, CSS, and JavaScript. No npm, webpack, or bundlers needed!" data-es="💡 No Se Requieren Herramientas de Compilación - ¡Este proyecto usa HTML, CSS y JavaScript puros! No necesitas npm, webpack ni empaquetadores.">💡 No Build Tools Required - This project uses vanilla HTML, CSS, and JavaScript. No npm, webpack, or bundlers needed!</p>
+                </div>
+            </section>
+
+            <!-- Core Concepts Section -->
+            <section id="core-concepts" class="guide-section">
+                <h2 data-en="🧠 Core Concepts" data-es="🧠 Conceptos Fundamentales">🧠 Core Concepts</h2>
+
+                <!-- CSS Animations -->
+                <div class="concept-card">
+                    <h3 data-en="1. CSS Keyframe Animations" data-es="1. Animaciones CSS con Keyframes">1. CSS Keyframe Animations</h3>
+                    <p data-en="CSS animations allow elements to transition between styles smoothly." data-es="Las animaciones CSS permiten que los elementos transiten suavemente entre estilos.">CSS animations allow elements to transition between styles smoothly.</p>
+                    
+                    <h4 data-en="Key Properties:" data-es="Propiedades Clave:">Key Properties:</h4>
+                    <ul>
+                        <li><code>@keyframes</code> - <span data-en="Defines the animation sequence" data-es="Define la secuencia de animación">Defines the animation sequence</span></li>
+                        <li><code>animation</code> - <span data-en="Applies the keyframe animation" data-es="Aplica la animación keyframe">Applies the keyframe animation</span></li>
+                        <li><code>animation-duration</code> - <span data-en="How long the animation takes" data-es="Duración de la animación">How long the animation takes</span></li>
+                        <li><code>animation-iteration-count</code> - <span data-en="Number of repetitions (infinite for loops)" data-es="Número de repeticiones (infinite para bucles)">Number of repetitions (<code>infinite</code> for loops)</span></li>
+                        <li><code>animation-timing-function</code> - <span data-en="Easing (ease, linear, ease-in-out)" data-es="Curva de aceleración (ease, linear, ease-in-out)">Easing (ease, linear, ease-in-out)</span></li>
+                    </ul>
+                </div>
+
+                <!-- SVG -->
+                <div class="concept-card">
+                    <h3 data-en="2. SVG (Scalable Vector Graphics)" data-es="2. SVG (Gráficos Vectoriales Escalables)">2. SVG (Scalable Vector Graphics)</h3>
+                    <p data-en="SVGs are resolution-independent graphics defined in XML format." data-es="Los SVG son gráficos independientes de resolución definidos en formato XML.">SVGs are resolution-independent graphics defined in XML format.</p>
+                    
+                    <h4 data-en="Advantages:" data-es="Ventajas:">Advantages:</h4>
+                    <ul>
+                        <li data-en="Scalable without quality loss" data-es="Escalables sin pérdida de calidad">Scalable without quality loss</li>
+                        <li data-en="Manipulable via JavaScript" data-es="Manipulables mediante JavaScript">Manipulable via JavaScript</li>
+                        <li data-en="Styleable with CSS" data-es="Estilizables con CSS">Styleable with CSS</li>
+                        <li data-en="Small file sizes for simple graphics" data-es="Tamaños de archivo pequeños para gráficos simples">Small file sizes for simple graphics</li>
+                    </ul>
+                </div>
+
+                <!-- GSAP -->
+                <div class="concept-card">
+                    <h3 data-en="3. GSAP (GreenSock Animation Platform)" data-es="3. GSAP (GreenSock Animation Platform)">3. GSAP (GreenSock Animation Platform)</h3>
+                    <p data-en="GSAP is a powerful JavaScript animation library." data-es="GSAP es una potente librería de animación JavaScript.">GSAP is a powerful JavaScript animation library.</p>
+                    
+                    <h4 data-en="Key Methods:" data-es="Métodos Principales:">Key Methods:</h4>
+                    <ul>
+                        <li><code>gsap.to()</code> - <span data-en="Animate to specific values" data-es="Animar hacia valores específicos">Animate to specific values</span></li>
+                        <li><code>gsap.from()</code> - <span data-en="Animate from specific values" data-es="Animar desde valores específicos">Animate from specific values</span></li>
+                        <li><code>gsap.to(element, {duration, property, ease})</code></li>
+                        <li data-en="Easing functions: back.out, elastic.out, sine.inOut, power2.out" data-es="Funciones de aceleración: back.out, elastic.out, sine.inOut, power2.out">Easing functions: <code>back.out</code>, <code>elastic.out</code>, <code>sine.inOut</code>, <code>power2.out</code></li>
+                    </ul>
+                </div>
+
+                <!-- Draggable -->
+                <div class="concept-card">
+                    <h3 data-en="4. GSAP Draggable" data-es="4. GSAP Draggable">4. GSAP Draggable</h3>
+                    <p data-en="Enables drag-and-drop functionality with physics-based interactions." data-es="Permite funcionalidad de arrastrar y soltar con interacciones basadas en física.">Enables drag-and-drop functionality with physics-based interactions.</p>
+                    
+                    <h4 data-en="Key Features:" data-es="Características Principales:">Key Features:</h4>
+                    <ul>
+                        <li data-en="Inertia (momentum-based movement)" data-es="Inercia (movimiento basado en momento)">Inertia (momentum-based movement)</li>
+                        <li data-en="Bounds constraints" data-es="Restricciones de límites">Bounds constraints</li>
+                        <li data-en="Callbacks (onDragStart, onDrag, onDragEnd)" data-es="Callbacks (onDragStart, onDrag, onDragEnd)">Callbacks (<code>onDragStart</code>, <code>onDrag</code>, <code>onDragEnd</code>)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Tutorial Section -->
+            <section id="tutorial" class="guide-section">
+                <h2 data-en="📚 Step-by-Step Tutorial" data-es="📚 Tutorial Paso a Paso">📚 Step-by-Step Tutorial</h2>
+
+                <!-- Step 1 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 1: HTML Structure" data-es="Paso 1: Estructura HTML">Step 1: HTML Structure</h3>
+                    <p data-en="Create a container-based layout:" data-es="Crea un diseño basado en contenedores:">Create a container-based layout:</p>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>HTML</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-html"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Animation Project</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Background elements -->
+        <div class="background">
+            <div class="sun"></div>
+            <div class="cloud cloud-1"></div>
+        </div>
+        
+        <!-- Interactive elements container -->
+        <div class="elements-container" id="elementsContainer">
+            <!-- Elements will be generated by JavaScript -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html></code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 2: CSS Animations" data-es="Paso 2: Animaciones CSS">Step 2: CSS Animations</h3>
+                    
+                    <h4 data-en="A. Pulsing Animation (Sun Effect)" data-es="A. Animación de Pulso (Efecto Sol)">A. Pulsing Animation (Sun Effect)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>CSS</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-css">.sun {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #FFE135 0%, #FFD700 50%, #FFA500 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 60px #FFD700;
+    animation: sunPulse 4s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 60px #FFD700; 
+    }
+    50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 0 80px #FFD700; 
+    }
+}</code></pre>
+                    </div>
+
+                    <h4 data-en="B. Floating Animation (Clouds)" data-es="B. Animación Flotante (Nubes)">B. Floating Animation (Clouds)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>CSS</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-css">.cloud {
+    position: absolute;
+    animation: cloudFloat 20s linear infinite;
+}
+
+@keyframes cloudFloat {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-150vw); }
+}</code></pre>
+                    </div>
+
+                    <h4 data-en="C. Bouncing Animation (Text)" data-es="C. Animación de Rebote (Texto)">C. Bouncing Animation (Text)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>CSS</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-css">.title {
+    animation: titleBounce 2s ease-in-out infinite;
+}
+
+@keyframes titleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}</code></pre>
+                    </div>
+
+                    <h4 data-en="D. Flutter Animation (Butterfly Wings)" data-es="D. Animación de Aleteo (Alas de Mariposa)">D. Flutter Animation (Butterfly Wings)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>CSS</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-css">.butterfly svg {
+    animation: flutter 0.2s ease-in-out infinite alternate;
+}
+
+@keyframes flutter {
+    0% { transform: scaleX(1); }
+    100% { transform: scaleX(0.7); }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 3: Creating SVG Graphics Dynamically" data-es="Paso 3: Crear Gráficos SVG Dinámicamente">Step 3: Creating SVG Graphics Dynamically</h3>
+                    
+                    <h4 data-en="SVG Template Function" data-es="Función de Plantilla SVG">SVG Template Function</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">// Template function for creating SVG elements
+const createSVGElement = (color, size = 1) => {
+    return `
+        <svg width="${80 * size}" height="${120 * size}" viewBox="0 0 80 120">
+            <!-- SVG content here -->
+            <circle cx="40" cy="40" r="30" fill="${color}" stroke="#333" stroke-width="2"/>
+        </svg>
+    `;
+};
+
+// Usage
+const element = document.createElement('div');
+element.innerHTML = createSVGElement('#FF69B4', 1.5);
+document.body.appendChild(element);</code></pre>
+                    </div>
+
+                    <h4 data-en="Complex SVG Example (Flower)" data-es="Ejemplo SVG Complejo (Flor)">Complex SVG Example (Flower)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">const flowerTemplate = (petalColor, size = 1) => {
+    return `
+        <svg width="${80 * size}" height="${120 * size}" viewBox="0 0 80 120">
+            <!-- Stem -->
+            <path d="M40 120 Q35 90 40 60" stroke="#228B22" stroke-width="4" fill="none"/>
+            
+            <!-- Petals arranged in a circle -->
+            <g transform="translate(40, 35)">
+                ${[0, 45, 90, 135, 180, 225, 270, 315].map(angle => `
+                    <ellipse cx="0" cy="-18" rx="8" ry="18" 
+                        fill="${petalColor}" 
+                        transform="rotate(${angle})"/>
+                `).join('')}
+            </g>
+            
+            <!-- Center -->
+            <circle cx="40" cy="35" r="12" fill="#FFD700"/>
+        </svg>
+    `;
+};</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 4: GSAP Animations" data-es="Paso 4: Animaciones GSAP">Step 4: GSAP Animations</h3>
+                    
+                    <h4 data-en="A. Entrance Animation" data-es="A. Animación de Entrada">A. Entrance Animation</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">// Animate element appearing from above
+gsap.from(element, {
+    y: -200,           // Start 200px above
+    opacity: 0,        // Start invisible
+    scale: 0.5,        // Start at half size
+    duration: 0.8,     // Animation duration
+    delay: 0.2,        // Delay before starting
+    ease: 'back.out(1.7)'  // Easing function
+});</code></pre>
+                    </div>
+
+                    <h4 data-en="B. Continuous Swaying Animation" data-es="B. Animación de Balanceo Continuo">B. Continuous Swaying Animation</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">function startSwaying(element) {
+    const swayAmount = 5;  // Degrees of rotation
+    const duration = 2;    // Seconds per sway
+    
+    gsap.to(element, {
+        rotation: swayAmount,
+        duration: duration,
+        ease: 'sine.inOut',
+        repeat: -1,        // Infinite repeat
+        yoyo: true         // Reverse animation
+    });
+}</code></pre>
+                    </div>
+
+                    <h4 data-en="C. Elastic Bounce Effect" data-es="C. Efecto de Rebote Elástico">C. Elastic Bounce Effect</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">// Bouncy scale effect
+gsap.to(element, {
+    scale: 1.1,
+    duration: 0.5,
+    ease: 'elastic.out(1, 0.5)'
+});</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 5: Drag and Drop with GSAP Draggable" data-es="Paso 5: Arrastrar y Soltar con GSAP Draggable">Step 5: Drag and Drop with GSAP Draggable</h3>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">// Make element draggable
+Draggable.create(element, {
+    type: 'x,y',           // Allow horizontal and vertical movement
+    bounds: '.container',  // Constrain to container
+    inertia: true,         // Physics-based momentum
+    
+    onDragStart: function() {
+        // Actions when drag starts
+        element.classList.add('dragging');
+        gsap.to(element, { scale: 1.1, duration: 0.3 });
+    },
+    
+    onDrag: function() {
+        // Actions during drag
+        console.log('Dragging at:', this.x, this.y);
+    },
+    
+    onDragEnd: function() {
+        // Actions when drag ends
+        element.classList.remove('dragging');
+        gsap.to(element, { 
+            scale: 1, 
+            duration: 0.5, 
+            ease: 'elastic.out(1, 0.5)' 
+        });
+    }
+});</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 6: Particle Effects (Sparkles)" data-es="Paso 6: Efectos de Partículas (Destellos)">Step 6: Particle Effects (Sparkles)</h3>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">function createSparkles(x, y) {
+    const container = document.getElementById('elementsContainer');
+    
+    for (let i = 0; i < 5; i++) {
+        // Create sparkle element
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = `${x + (Math.random() - 0.5) * 50}px`;
+        sparkle.style.top = `${y + (Math.random() - 0.5) * 50}px`;
+        container.appendChild(sparkle);
+        
+        // Remove after animation completes
+        setTimeout(() => sparkle.remove(), 1000);
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>CSS</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-css">.sparkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, white 0%, transparent 70%);
+    border-radius: 50%;
+    animation: sparkleAnim 1s ease-out forwards;
+}
+
+@keyframes sparkleAnim {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 7 -->
+                <div class="tutorial-step">
+                    <h3 data-en="Step 7: Ambient Effects" data-es="Paso 7: Efectos Ambientales">Step 7: Ambient Effects</h3>
+                    
+                    <h4 data-en="Wind Effect" data-es="Efecto de Viento">Wind Effect</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">function windEffect() {
+    const windStrength = 5 + Math.random() * 10;
+    
+    elements.forEach(element => {
+        gsap.to(element, {
+            rotation: `+=${windStrength * (Math.random() > 0.5 ? 1 : -1)}`,
+            duration: 0.5,
+            ease: 'power2.out',
+            onComplete: () => startSwaying(element)
+        });
+    });
+}
+
+// Trigger wind periodically
+setInterval(windEffect, 15000);</code></pre>
+                    </div>
+
+                    <h4 data-en="Flying Objects (Butterflies)" data-es="Objetos Voladores (Mariposas)">Flying Objects (Butterflies)</h4>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-javascript">function createButterfly() {
+    const butterfly = document.createElement('div');
+    butterfly.className = 'butterfly';
+    butterfly.innerHTML = `<svg>...</svg>`;
+    
+    // Start position (off-screen left)
+    butterfly.style.left = '-50px';
+    butterfly.style.top = `${100 + Math.random() * 300}px`;
+    
+    container.appendChild(butterfly);
+    
+    // Fly across screen
+    gsap.to(butterfly, {
+        x: window.innerWidth + 100,
+        duration: 10,
+        ease: 'none',
+        onComplete: () => butterfly.remove()
+    });
+    
+    // Flutter up and down
+    gsap.to(butterfly, {
+        y: '+=30',
+        duration: 1,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true
+    });
+}
+
+// Create butterflies periodically
+setInterval(createButterfly, 5000);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Examples Section -->
+            <section id="examples" class="guide-section">
+                <h2 data-en="💻 Code Examples" data-es="💻 Ejemplos de Código">💻 Code Examples</h2>
+
+                <h3 data-en="Complete Animation Chain" data-es="Cadena de Animación Completa">Complete Animation Chain</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JavaScript</span>
+                        <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                    </div>
+                    <pre><code class="language-javascript">// Chain multiple animations
+const tl = gsap.timeline();
+
+tl.from('.title', { opacity: 0, y: -50, duration: 0.5 })
+  .from('.subtitle', { opacity: 0, y: -30, duration: 0.5 }, '-=0.3')
+  .from('.element', { scale: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.2');</code></pre>
+                </div>
+
+                <h3 data-en="Color Utility Function" data-es="Función Utilidad de Color">Color Utility Function</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JavaScript</span>
+                        <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                    </div>
+                    <pre><code class="language-javascript">// Darken or lighten a hex color
+function shadeColor(color, percent) {
+    const num = parseInt(color.replace('#', ''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = (num >> 16) + amt;
+    const G = (num >> 8 & 0x00FF) + amt;
+    const B = (num & 0x0000FF) + amt;
+    
+    return '#' + (0x1000000 + 
+        (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + 
+        (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + 
+        (B < 255 ? B < 1 ? 0 : B : 255)
+    ).toString(16).slice(1);
+}
+
+// Usage
+const darkerColor = shadeColor('#FF69B4', -20);  // Darker
+const lighterColor = shadeColor('#FF69B4', 20);  // Lighter</code></pre>
+                </div>
+            </section>
+
+            <!-- Tips Section -->
+            <section id="tips" class="guide-section">
+                <h2 data-en="💡 Tips & Best Practices" data-es="💡 Consejos y Mejores Prácticas">💡 Tips & Best Practices</h2>
+
+                <div class="tip-card">
+                    <h3 data-en="Performance" data-es="Rendimiento">Performance</h3>
+                    <ol>
+                        <li data-en="Use transform and opacity - These properties are GPU-accelerated" data-es="Usa transform y opacity - Estas propiedades están aceleradas por GPU"><strong>Use <code>transform</code> and <code>opacity</code></strong> - These properties are GPU-accelerated</li>
+                        <li data-en="Avoid animating width, height, margin - Causes layout reflows" data-es="Evita animar width, height, margin - Causan reflujos de layout"><strong>Avoid animating <code>width</code>, <code>height</code>, <code>margin</code></strong> - Causes layout reflows</li>
+                        <li data-en="Use will-change sparingly - Only on elements that will animate" data-es="Usa will-change con moderación - Solo en elementos que se animarán"><strong>Use <code>will-change</code> sparingly</strong> - Only on elements that will animate</li>
+                        <li data-en="Clean up elements - Remove elements after animations complete" data-es="Limpia los elementos - Elimina elementos después de completar animaciones"><strong>Clean up elements</strong> - Remove elements after animations complete</li>
+                    </ol>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>CSS</span>
+                        <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                    </div>
+                    <pre><code class="language-css">.animated-element {
+    will-change: transform, opacity;
+    transform: translateZ(0);  /* Force GPU acceleration */
+}</code></pre>
+                </div>
+
+                <div class="tip-card">
+                    <h3 data-en="Accessibility" data-es="Accesibilidad">Accessibility</h3>
+                    <p data-en="Respect prefers-reduced-motion for users who prefer less animation:" data-es="Respeta prefers-reduced-motion para usuarios que prefieren menos animación:">Respect <code>prefers-reduced-motion</code> for users who prefer less animation:</p>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>CSS</span>
+                            <button class="copy-btn" data-en="Copy" data-es="Copiar">Copy</button>
+                        </div>
+                        <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <h3 data-en="Browser Compatibility" data-es="Compatibilidad de Navegadores">Browser Compatibility</h3>
+                    <ul>
+                        <li data-en="GSAP works in all modern browsers" data-es="GSAP funciona en todos los navegadores modernos">GSAP works in all modern browsers</li>
+                        <li data-en="CSS animations have excellent support" data-es="Las animaciones CSS tienen excelente soporte">CSS animations have excellent support</li>
+                        <li data-en="Test on mobile devices for touch interactions" data-es="Prueba en dispositivos móviles para interacciones táctiles">Test on mobile devices for touch interactions</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Quick Reference -->
+            <section class="guide-section">
+                <h2 data-en="📖 Quick Reference" data-es="📖 Referencia Rápida">📖 Quick Reference</h2>
+
+                <h3 data-en="GSAP Easing Functions" data-es="Funciones de Aceleración GSAP">GSAP Easing Functions</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Easing</th>
+                                <th data-en="Description" data-es="Descripción">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>linear</code></td><td data-en="Constant speed" data-es="Velocidad constante">Constant speed</td></tr>
+                            <tr><td><code>ease.in</code></td><td data-en="Slow start" data-es="Inicio lento">Slow start</td></tr>
+                            <tr><td><code>ease.out</code></td><td data-en="Slow end" data-es="Final lento">Slow end</td></tr>
+                            <tr><td><code>ease.inOut</code></td><td data-en="Slow start and end" data-es="Inicio y final lentos">Slow start and end</td></tr>
+                            <tr><td><code>back.out</code></td><td data-en="Overshoots then returns" data-es="Se pasa y regresa">Overshoots then returns</td></tr>
+                            <tr><td><code>elastic.out</code></td><td data-en="Bouncy spring effect" data-es="Efecto de resorte">Bouncy spring effect</td></tr>
+                            <tr><td><code>sine.inOut</code></td><td data-en="Smooth S-curve" data-es="Curva S suave">Smooth S-curve</td></tr>
+                            <tr><td><code>power2.out</code></td><td data-en="Quadratic ease out" data-es="Aceleración cuadrática">Quadratic ease out</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Resources -->
+            <section class="guide-section">
+                <h2 data-en="🔗 Resources" data-es="🔗 Recursos">🔗 Resources</h2>
+                <ul class="resources-list">
+                    <li><a href="https://greensock.com/docs/" target="_blank" data-en="GSAP Documentation" data-es="Documentación de GSAP">GSAP Documentation</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations" target="_blank" data-en="MDN CSS Animations" data-es="MDN Animaciones CSS">MDN CSS Animations</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial" target="_blank" data-en="MDN SVG Tutorial" data-es="MDN Tutorial SVG">MDN SVG Tutorial</a></li>
+                    <li><a href="https://css-tricks.com/almanac/properties/a/animation/" target="_blank" data-en="CSS-Tricks Animation Guide" data-es="CSS-Tricks Guía de Animación">CSS-Tricks Animation Guide</a></li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="guide-footer">
+            <p data-en="🌸 Created for the Flower Garden Interactive Demo 🌸" data-es="🌸 Creado para la Demo Interactiva del Jardín de Flores 🌸">🌸 Created for the Flower Garden Interactive Demo 🌸</p>
+        </footer>
+    </div>
+
+    <script src="guide-script.js"></script>
+</body>
+</html>
